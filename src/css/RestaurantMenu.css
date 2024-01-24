@@ -1,0 +1,144 @@
+.menu {
+    margin: 0 25%;
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.menu-title {
+    font-size: 24px;
+    margin: 6px 0;
+}
+
+.menu-cuisines {
+    margin-bottom: 4px;
+    color: gray;
+    font-size: small;
+    font-weight: 300;
+}
+
+.menu-area {
+    color: gray;
+    font-size: small;
+    font-weight: 300;
+}
+
+.menu-rating-container {
+    border: 2px solid #d3d3d3;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.menu-rating {
+    color: green;
+    font-size: 16px;
+    padding: 4px 0 4px 0px;
+    border-bottom: 2px solid #d3d3d3;
+}
+
+.menu-rating-cnt {
+    padding: 4px 0px 0px 0px;
+    font-size: 12px;
+}
+
+.dashed {
+    border: 1px dashed #d3d3d3;
+    margin: 4px 0px;
+}
+
+.continuous {
+    border: 1px solid #d3d3d3;
+    margin: 20px 0px;
+}
+
+.menu-details {
+    display: flex;
+    align-items: center;
+    margin: 12px 0;
+}
+
+.menu-details span {
+    margin: 0 4px;
+    font-weight: 800;
+}
+
+.menu-div {
+    display: flex;
+    align-items: center;
+    margin: 0px 12px;
+}
+
+.rupee-icon {
+    font-size: 24px;
+}
+
+.delivery-icon {
+    font-size: 20px;
+}
+
+.recommended-container-title {
+    margin: 20px 0;
+    color: #3e4152;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.recommended-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.recommended-card-details {
+    width: 80%;
+}
+
+.recommended-card-image {
+    width: 120px;
+    height: 100px;
+}
+
+.recommended-card-image > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.recommended-card-details > .title {
+    color: #3e4152;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.recommended-card-details > .price {
+    color: #3e4152;
+    font-size: small;
+    font-weight: 300;
+    margin: 4px 0;
+}
+
+.recommended-card-details > .desc {
+    color: gray;
+    font-size: small;
+    font-weight: 300;
+    margin: 12px 0;
+}
+
+.recommended-container > ul {
+    list-style: none;
+}
+
+.veg {
+    color: #0f8a65;
+    font-size: 20px;
+}
+
+.non-veg {
+    color: #e43b4f;
+}
