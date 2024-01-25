@@ -32,6 +32,7 @@ const RecommendedCard = ({item}) => {
 
 const RestaurantMenu = () => {
     const [resInfo, setResInfo] = useState(null);
+    const [vegRes, setVegRes] = useState([]);
     const { resID } = useParams();
     
     useEffect(() => {
@@ -74,6 +75,11 @@ const RestaurantMenu = () => {
                 </div>
             </div>
             <p className="dashed"></p>
+            <div className="toggle">
+                <button className="veg-filter" onClick={() => {
+
+                }}>Filter Veg</button>
+            </div>
             <div className="recommended-container">
                 <h3 className="recommended-container-title">Recommended {"(" + resInfo.cards[2].groupedCard.cardGroupMap.REGULAR.cards[2].card.card.itemCards.length + ")"}</h3>
                 <ul className="list">
