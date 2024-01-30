@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom"; 
 import { FaHourglassHalf } from "react-icons/fa";
 import { HiOutlineCurrencyRupee } from "react-icons/hi2";
@@ -8,6 +8,7 @@ import { LiaVimeoSquare } from "react-icons/lia";
 import Shimmer from "./Shimmer";
 import "../css/RestaurantMenu.css";
 import { CDN_URL } from "../utils/constant";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const RecommendedCard = ({item}) => {
     // console.log(item.card.info);
@@ -21,7 +22,7 @@ const RecommendedCard = ({item}) => {
                     <h6 className="desc">{item.card.info.description}</h6>
                 </div>
                 <div className="recommended-card-image">
-                    <img src={CDN_URL + item.card.info.imageId} alt={item.title} />
+                    {item.card.info.imageId && <img src={CDN_URL + item.card.info.imageId} alt={item.title} />}
                 </div>
             </div>
             <p className="continuous"></p>  
@@ -31,20 +32,10 @@ const RecommendedCard = ({item}) => {
 
 
 const RestaurantMenu = () => {
-    const [resInfo, setResInfo] = useState(null);
     const [vegRes, setVegRes] = useState([]);
     const { resID } = useParams();
-    
-    useEffect(() => {
-        fetchData();
-    }, []);
 
-    const fetchData = async () => {
-        const response = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=19.1485289&lng=77.3191471&restaurantId=${resID}`);
-        const data = await response.json();
-        console.log(data);
-        setResInfo(data?.data);
-    }
+    const resInfo = useRestaurantMenu(resID);
 
     if(resInfo === null) return <Shimmer /> ;
 
