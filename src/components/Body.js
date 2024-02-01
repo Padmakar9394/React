@@ -2,9 +2,11 @@ import React, { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 
 
-import RestuarntCard from "./RestaurantCard";
+import RestuarntCard, { withPromotionLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
+
+const EnhancedComponent = withPromotionLabel(RestuarntCard);
 
 const Body = () => {
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -14,10 +16,10 @@ const Body = () => {
     console.log("render happens!");
 
     const fetchData = async () => {
-        const response = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.1485289&lng=77.3191471&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        const response = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5204303&lng=73.8567437&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
         const data = await response.json();
-        const realData = data?.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-        console.log(data);
+        const realData = data?.data.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+        // console.log(data);
         setListOfRestaurants(realData);
         setFilteredList(realData);
     }
@@ -35,11 +37,11 @@ const Body = () => {
         return <Shimmer />;
     }
     return (
-        <div className="body">
-            <div className="body-top">
-                <div className="search">
-                    <input className="search-box" type="text" value={searchText} onChange={(e) => (setSearchText(e.target.value))}/>
-                    <button className="search-btn" 
+        <div className="mx-24">
+            <div className="flex my-8">
+                <div className="">
+                    <input className="outline-none bg-gray-200 py-2 px-4 font-mono" placeholder="Search for food and restaurant" type="text" value={searchText} onChange={(e) => (setSearchText(e.target.value))}/>
+                    <button className="mx-2 bg-green-200 px-4 py-2 font-bold rounded-md" 
                             onClick={() => { 
                                 const filteredRestaurants = listOfRestaurants.filter((res) => {
                                 return res.info.name.toLowerCase().includes(searchText.toLowerCase())
@@ -48,8 +50,8 @@ const Body = () => {
                             setFilteredList(filteredRestaurants);}}
                     >Search</button>
                 </div>
-                <div className="filter">
-                    <button className="filter-btn" onClick={() => {
+                <div className="mx-2">
+                    <button className="bg-green-200 px-4 py-2 font-bold rounded-md" onClick={() => {
                         let newfilteredList = listOfRestaurants.filter((res) => {
                             return res.info.avgRating > 4;
                     })
@@ -57,11 +59,13 @@ const Body = () => {
                     }}>Top Rated Restaurants</button>
                 </div>
             </div>
-            <div className="res-container">
+            <div className="flex flex-wrap w-full my-8">
                 { 
                     filteredList?.map((res) => (
                         // console.log(res);
-                        <Link className="link new" key={res.info.id} to={"/restaurant/" + res.info.id}><RestuarntCard details={res} /></Link>
+                        <Link className="w-1/3" key={res.info.id} to={"/restaurant/" + res.info.id}>
+                            {res.info.promoted ? <EnhancedComponent details={res} /> : <RestuarntCard  details={res} /> }
+                        </Link>
                     ))
                 }
             </div>
