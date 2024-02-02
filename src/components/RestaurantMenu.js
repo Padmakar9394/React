@@ -2,45 +2,26 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom"; 
 import { FaHourglassHalf } from "react-icons/fa";
 import { HiOutlineCurrencyRupee } from "react-icons/hi2";
-import { FaRegSquareCaretUp } from "react-icons/fa6";
-import { LiaVimeoSquare } from "react-icons/lia";
+
 
 import Shimmer from "./Shimmer";
 import "../css/RestaurantMenu.css";
 import { CDN_URL } from "../utils/constant";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
-
-const RecommendedCard = ({item}) => {
-    // console.log(item.card.info);
-    return (
-        <>
-            <div className="recommended-card">
-                <div className="recommended-card-details">
-                    <h3>{item.card.info?.isVeg ? <LiaVimeoSquare className="veg" /> : <FaRegSquareCaretUp className="non-veg" />}</h3>
-                    <h2 className="title">{item.card.info.name}</h2>
-                    <h4 className="price">₹ {item.card.info.price / 100 || item.card.info.defaultPrice / 100}</h4>
-                    <h6 className="desc">{item.card.info.description}</h6>
-                </div>
-                <div className="recommended-card-image">
-                    {item.card.info.imageId && <img src={CDN_URL + item.card.info.imageId} alt={item.title} />}
-                </div>
-            </div>
-            <p className="continuous"></p>  
-        </>
-    )
-}
-
+import RestaurantMenuDropdown from "./RestaurantMenuDropdown";
 
 const RestaurantMenu = () => {
     const [vegRes, setVegRes] = useState([]);
     const { resID } = useParams();
 
     const resInfo = useRestaurantMenu(resID);
+    const [activeIdx, setActiveIdx] = useState(1);
 
     if(resInfo === null) return <Shimmer /> ;
-
-    // console.log(resInfo);
     const {name, cuisines, areaName, totalRatingsString, costForTwoMessage, avgRating} = resInfo?.cards[0]?.card?.card?.info;
+
+    const categories = resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(c => c.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory");
+    // console.log(resInfo);
     return (
         <div className="menu">
             <div className="menu-header">
@@ -58,7 +39,7 @@ const RestaurantMenu = () => {
             <div className="menu-details">
                 <div className="menu-div">
                     <span className="delivery-icon"><FaHourglassHalf /></span>
-                    <span>{resInfo?.cards[0]?.card?.card?.info.sla.deliveryTime}   MINS</span>
+                    <span>{resInfo?.cards[0]?.card?.card?.info?.sla?.deliveryTime ? resInfo?.cards[0]?.card?.card?.info?.sla?.deliveryTime : 30}   MINS</span>
                 </div>
                 <div className="menu-div">
                     <span className="rupee-icon"><HiOutlineCurrencyRupee /></span>
@@ -71,15 +52,17 @@ const RestaurantMenu = () => {
 
                 }}>Filter Veg</button>
             </div>
-            <div className="recommended-container">
-                <h3 className="recommended-container-title">Recommended {"(" + resInfo.cards[2].groupedCard.cardGroupMap.REGULAR.cards[2].card.card.itemCards.length + ")"}</h3>
-                <ul className="list">
-                    {
-                        resInfo.cards[2].groupedCard.cardGroupMap.REGULAR.cards[2].card.card.itemCards.map((res, index) => (
-                            <li key={index}><RecommendedCard item={res} /></li>
-                        ))
-                    }</ul>
-                
+            <div>
+                {
+                    categories.map((c, index) => (
+                        <RestaurantMenuDropdown 
+                            key={c.card?.card?.title} 
+                            data={c.card?.card}
+                            showDetails={index === activeIdx ? true : false}
+                            setActiveDropDown={() => setActiveIdx(index)}
+                        />
+                    ))
+                }
             </div>
         </div>
     )

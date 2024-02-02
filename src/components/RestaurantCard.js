@@ -4,7 +4,7 @@ import React from "react";
 import { CDN_URL } from "../utils/constant";
 
 const RestuarntCard = ({details}) => {
-    console.log(details);
+    // console.log(details);
     const url = CDN_URL + details.info.cloudinaryImageId;
     return (
         <div className="hover:bg-gray-50 hover:shadow-xl rounded-lg p-4 m-2">
@@ -14,7 +14,7 @@ const RestuarntCard = ({details}) => {
                 <div className="flex items-center my-1">
                     <h3>⭐{details.info.avgRating}</h3>
                     <span className="bg-black w-2 h-2 rounded-full ml-2 mr-1"></span>
-                    <h3>{details.info.sla.deliveryTime}minutes</h3>
+                    <h3>{details?.info?.sla?.deliveryTime ? details.info.sla.deliveryTime : 30}minutes</h3>
                 </div>
                 <p className="text-gray-400">{details.info.cuisines.join(", ")}</p>
                 <p className="text-gray-400">{details.info.locality}</p>
@@ -25,6 +25,7 @@ const RestuarntCard = ({details}) => {
 
 export const withPromotionLabel = (RecommendedCard) => {
     return (props) => {
+        console.log(props);
         return (
             <div>
                 <label>Promotion</label>
