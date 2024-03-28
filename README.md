@@ -28,3 +28,15 @@ const HeadingComponent = () => {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(<HeadingComponent />);
+
+
+# Setting up testing in our app
+    -Install React Testing Library
+    -Install Jest Library
+    -Install Babel Dependencies
+    -Configure Babel
+    -Configure Parcel Config to disable Babel transpilation in Parcel
+    -Jest Configuration --> npx jest --init
+    -Install JSDOM library
+    -Install @babel/preset-react --> to make jsx work in tests
+    -Install @testing-library/jest-dom

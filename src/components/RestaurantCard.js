@@ -5,12 +5,13 @@ import { CDN_URL } from "../utils/constant";
 import UserContext from "../utils/UserContext";
 
 const RestuarntCard = ({details}) => {
+    // console.log(details);
     const user = useContext(UserContext);
 
     // console.log(user);
     const url = CDN_URL + details.info.cloudinaryImageId;
     return (
-        <div className="hover:bg-gray-50 hover:shadow-xl rounded-lg p-4 m-2">
+        <div data-testid="resCard" className="hover:bg-gray-50 hover:shadow-xl rounded-lg p-4 m-2">
             <img className="rounded-lg w-full h-64 object-cover" alt="res-img" src={url} />
             <div className="">
                 <h2 className="font-bold my-2">{details.info.name}</h2>

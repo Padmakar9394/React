@@ -13,7 +13,7 @@ const Body = () => {
     const [filteredList, setFilteredList] = useState([]);
     const [searchText, setSearchText] = useState("");
 
-    console.log("render happens!");
+    // console.log("render happens!");
 
     const fetchData = async () => {
         const response = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5204303&lng=73.8567437&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
@@ -40,7 +40,13 @@ const Body = () => {
         <div className="mx-24">
             <div className="flex my-8">
                 <div className="">
-                    <input className="outline-none bg-gray-200 py-2 px-4 font-mono" placeholder="Search for food and restaurant" type="text" value={searchText} onChange={(e) => (setSearchText(e.target.value))}/>
+                    <input 
+                        className="outline-none bg-gray-200 py-2 px-4 font-mono" 
+                        placeholder="Search for food and restaurant" 
+                        type="text" value={searchText} 
+                        data-testid="searchInput"
+                        onChange={(e) => (setSearchText(e.target.value))}
+                    />
                     <button className="mx-2 bg-green-200 px-4 py-2 font-bold rounded-md" 
                             onClick={() => { 
                                 const filteredRestaurants = listOfRestaurants.filter((res) => {
